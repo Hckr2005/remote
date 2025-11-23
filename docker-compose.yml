@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app: # Spring Boot
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/internship
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+    depends_on:
+      - db
+      - redis
+
+  db: # MySQL
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: internship
+    ports:
+      - "3306:3306"
+
+  redis: # Redis
+    image: redis:7
+    ports:
+      - "6379:6379"
